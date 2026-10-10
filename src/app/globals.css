@@ -218,6 +218,16 @@ a { color: inherit; }
 }
 .soon { font: 400 26px/1.25 var(--hand); max-width: 30ch; margin: 0; }
 footer { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 46px 0 34px; font-weight: 500; position: relative; }
+.consent {
+  position: fixed; left: 16px; bottom: 16px; z-index: 50; width: min(430px, calc(100vw - 32px));
+  display: flex; gap: 14px; align-items: flex-start; padding: 16px;
+  background: var(--paper); border: 3px solid var(--ink); border-radius: 14px; box-shadow: 6px 6px 0 var(--ink);
+}
+.consent .cat { flex: none; margin-top: 2px; }
+.consent p { margin: 0 0 12px; font-size: 15.5px; line-height: 1.4; }
+.consent a { color: var(--cobalt); font-weight: 500; }
+.consent-actions { display: flex; gap: 12px; }
+.consent-choice { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; font-weight: 500; }
 .foot-links { display: flex; gap: 16px; }
 .foot-links a { text-underline-offset: 3px; text-decoration-thickness: 2px; }
 .article { max-width: 68ch; }

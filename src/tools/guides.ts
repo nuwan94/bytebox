@@ -242,8 +242,8 @@ export const guides: Record<string, ToolGuide> = {
         a: "No. They are practical patterns for finding things in text. The email pattern, for example, finds ordinary addresses but does not follow the full email standard, so use a proper validator where correctness matters.",
       },
       {
-        q: "Why did the page freeze?",
-        a: "Some patterns take an enormous amount of time on certain text, usually when a repeated group contains another repeat, as in (a+)+. The pattern runs in your browser tab, so close the tab and simplify the pattern.",
+        q: "Why was my pattern stopped?",
+        a: "Some patterns take an enormous amount of time on certain text, usually when a repeated group contains another repeat, as in (a+)+. Matching runs in the background and is stopped after two seconds so the page stays usable. Simplify the pattern, because the same thing would hang a real program.",
       },
       {
         q: "How many matches does it show?",

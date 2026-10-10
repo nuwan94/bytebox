@@ -1,10 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Mono, Gochi_Hand, Rubik, Titan_One } from "next/font/google";
 import Link from "next/link";
-import Script from "next/script";
 import type { ReactNode } from "react";
 import { Confetti } from "@/components/Confetti";
-import { GA_MEASUREMENT_ID, pageUrl, SITE_DESCRIPTION, SITE_NAME, SITE_URL, SPONSOR_URL } from "@/lib/site";
+import { Analytics } from "@/components/Analytics";
+import { pageUrl, SITE_DESCRIPTION, SITE_NAME, SITE_URL, SPONSOR_URL } from "@/lib/site";
 import "./globals.css";
 
 const display = Titan_One({ weight: "400", subsets: ["latin"], variable: "--font-display" });
@@ -47,18 +47,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <a className="sponsor" href={SPONSOR_URL}>Sponsor on GitHub</a>
           </footer>
         </div>
-        {/* Google Analytics: page views only, and only on the deployed site. */}
-        {process.env.NODE_ENV === "production" && (
-          <>
-            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} strategy="afterInteractive" />
-            <Script id="google-analytics" strategy="afterInteractive">
-              {`window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', '${GA_MEASUREMENT_ID}');`}
-            </Script>
-          </>
-        )}
+        <Analytics />
       </body>
     </html>
   );

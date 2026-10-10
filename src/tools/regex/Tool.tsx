@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { failed, ok, Status, waiting, type StatusInfo } from "@/components/Status";
-import { findMatches, MATCH_LIMIT, toSegments } from "./logic";
+import { MATCH_LIMIT, toSegments } from "./logic";
+import { TIME_LIMIT_MS, useMatches } from "./useMatches";
 import { COMMON_PATTERNS, PIECES, SAMPLE_TEXT } from "./patterns";
 
 const FLAGS = [
@@ -16,11 +17,12 @@ export default function RegexTester() {
   const [flags, setFlags] = useState("");
   const [text, setText] = useState(SAMPLE_TEXT);
 
-  const result = useMemo(() => findMatches(pattern, flags, text), [pattern, flags, text]);
+  const { result, timedOut } = useMatches(pattern, flags, text);
   const segments = result.ok ? toSegments(text, result.matches) : [{ text, hit: false }];
 
   let status: StatusInfo;
-  if (!result.ok) status = failed(`That pattern doesn't compile. ${result.error}`);
+  if (timedOut) status = failed(`That pattern took more than ${TIME_LIMIT_MS / 1000} seconds on this text, so it was stopped. A repeat inside a repeat, like (a+)+, is the usual cause.`);
+  else if (!result.ok) status = failed(`That pattern doesn't compile. ${result.error}`);
   else if (!pattern) status = waiting("Pick a common pattern or type your own.");
   else if (result.matches.length === 0) status = { tone: "idle", text: "No matches in the sample text.", cat: "idle" };
   else if (result.capped) status = ok(`More than ${MATCH_LIMIT} matches. Showing the first ${MATCH_LIMIT}.`);

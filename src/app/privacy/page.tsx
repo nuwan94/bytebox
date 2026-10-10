@@ -1,21 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ConsentChoice } from "@/components/ConsentChoice";
 import { InfoPage } from "@/components/InfoPage";
 import { CONTACT_EMAIL, pageUrl, REPO_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy policy",
-  description: "What Bytebox collects and what it does not: tool input stays in your browser, and page views are measured with Google Analytics.",
+  description: "What Bytebox collects and what it does not: tool input stays in your browser, and page views are measured with Google Analytics only if you allow it.",
   alternates: { canonical: pageUrl("/privacy/") },
 };
 
 export default function Privacy() {
   return (
     <InfoPage title="Privacy policy" color="lilac">
-      <p className="article-note">Last updated 10 October 2026.</p>
+      <p className="article-note">Last updated 11 October 2026.</p>
       <p>
         This policy covers the Bytebox website. In short: what you type or paste into a tool stays in your browser,
-        and the site measures page views with Google Analytics.
+        and the site measures page views with Google Analytics only if you allow it.
       </p>
 
       <h2>What you put into the tools</h2>
@@ -30,19 +31,25 @@ export default function Privacy() {
 
       <h2>Page-view statistics</h2>
       <p>
-        Bytebox uses Google Analytics to see which pages are visited and roughly how many people use the site. Google
+        If you allow it, Bytebox uses Google Analytics to see which pages are visited and roughly how many people use
+        the site. It stays off until you press Allow in the notice at the bottom of the page. Once allowed, Google
         Analytics sets cookies in your browser and collects information such as the pages you open, the site you came
         from, your browser and device type, and your approximate location worked out from your IP address. It does not
         receive anything you enter into a tool.
       </p>
       <p>
+        Your choice is remembered in this browser's storage so that you are not asked on every visit. If you decline
+        or later change your mind, the Google Analytics cookies for this site are removed.
+      </p>
+      <ConsentChoice />
+      <p>
         Google describes how it handles this information in{" "}
         <a href="https://policies.google.com/technologies/partner-sites">
           How Google uses information from sites or apps that use its services
         </a>
-        . You can stop Google Analytics from measuring your visits on any site with the{" "}
-        <a href="https://tools.google.com/dlpage/gaoptout">Google Analytics opt-out browser add-on</a>, or by blocking
-        cookies for this site in your browser settings. The tools work the same either way.
+        . You can also stop Google Analytics from measuring your visits on every site with the{" "}
+        <a href="https://tools.google.com/dlpage/gaoptout">Google Analytics opt-out browser add-on</a>. The tools work
+        the same whatever you choose.
       </p>
 
       <h2>Hosting</h2>
