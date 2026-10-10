@@ -188,7 +188,8 @@ a { color: inherit; }
   border: 3px solid var(--ink); border-radius: 999px; background: var(--c); color: var(--t, var(--ink));
 }
 .soon { font: 400 26px/1.25 var(--hand); max-width: 30ch; margin: 0; }
-footer { padding: 46px 0 34px; font-weight: 500; position: relative; }
+footer { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 46px 0 34px; font-weight: 500; position: relative; }
+.maker { font: 400 18px/1 var(--display); text-decoration: none; background: var(--ink); color: var(--sun); padding: 7px 10px 5px; transform: rotate(2deg); }
 
 @media (max-width: 820px) {
   .hero { grid-template-columns: 1fr; }

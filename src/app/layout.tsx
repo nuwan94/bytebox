@@ -25,7 +25,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Link className="mark" href="/">Bytebox</Link>
           </header>
           {children}
-          <footer>Bytebox is a static site. Your input stays on this device.</footer>
+          <footer>
+            <span>Bytebox is a static site. Your input stays on this device.</span>
+            <a className="maker" href="https://nuwan.dev">nuwan.dev</a>
+          </footer>
         </div>
       </body>
     </html>
