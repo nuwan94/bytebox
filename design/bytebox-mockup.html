@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bytebox design mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Gochi+Hand&family=Rubik:wght@400;500;700&family=Titan+One&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #000;
+    --paper: #fff;
+    --sun: #ffd400;
+    --gum: #ff6fb0;
+    --cobalt: #2b3fe0;
+    --mint: #2ed3a6;
+    --tang: #ff7a2f;
+    --lilac: #b79cff;
+    --display: "Titan One", "Arial Black", sans-serif;
+    --body: "Rubik", system-ui, sans-serif;
+    --hand: "Gochi Hand", "Comic Sans MS", cursive;
+    --mono: "DM Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    position: relative;
+    min-height: 100vh;
+    background: var(--sun);
+    color: var(--ink);
+    font: 400 17px/1.5 var(--body);
+    overflow-x: hidden;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 4px solid var(--cobalt); outline-offset: 3px; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; position: relative; }
+
+  /* Loose shapes on the page, behind everything */
+  .confetti { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .confetti svg { position: absolute; }
+
+  /* Top bar */
+  .bar { display: flex; align-items: center; gap: 16px; padding: 18px 0; position: relative; }
+  .mark {
+    font: 400 24px/1 var(--display); text-decoration: none;
+    background: var(--ink); color: var(--sun); padding: 8px 12px 6px; transform: rotate(-2deg);
+  }
+  .search { flex: 1; max-width: 420px; margin-left: auto; position: relative; }
+  .search input {
+    width: 100%; font: 500 16px var(--body); padding: 11px 16px;
+    border: 3px solid var(--ink); border-radius: 999px; background: var(--paper);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .search input::placeholder { color: #555; }
+
+  /* Hero: cut-out letters are the one loud thing */
+  .hero { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; padding: 28px 0 44px; position: relative; }
+  .cutout { display: flex; gap: 6px; margin: 0; font: 400 clamp(40px, 7.2vw, 112px)/0.95 var(--display); }
+  .cutout span {
+    display: inline-block; padding: 0.06em 0.14em 0; background: var(--c); color: var(--t, var(--ink));
+    border: 3px solid var(--ink); box-shadow: 5px 5px 0 var(--ink); transform: rotate(var(--r)) translateY(var(--y, 0));
+  }
+  .lede { font-size: 20px; max-width: 34ch; margin: 26px 0 0; font-weight: 500; }
+  .mascot { display: grid; justify-items: center; gap: 0; position: relative; }
+  .bubble {
+    font: 400 21px/1.15 var(--hand); background: var(--paper); border: 3px solid var(--ink);
+    border-radius: 22px 22px 22px 4px; padding: 10px 14px; max-width: 190px; margin: 0 0 10px 70px;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .cat svg { display: block; filter: drop-shadow(0 0 0 var(--paper)); }
+  .diecut { background: var(--paper); border: 3px solid var(--ink); border-radius: 26px; padding: 12px 14px 0; box-shadow: 5px 5px 0 var(--ink); transform: rotate(3deg); }
+  .floor { display: grid; grid-template-columns: repeat(6, 1fr); width: 100%; margin-top: 2px; border-top: 3px solid var(--ink); }
+  .floor i { aspect-ratio: 1.6; background: var(--paper); }
+  .floor i:nth-child(odd) { background: var(--f, var(--ink)); }
+  .diecut .floor { margin: 0 -14px; width: calc(100% + 28px); border-radius: 0 0 22px 22px; overflow: hidden; }
+  .party .floor i:nth-child(6n+1) { --f: var(--gum); } .party .floor i:nth-child(6n+3) { --f: var(--cobalt); } .party .floor i:nth-child(6n+5) { --f: var(--mint); }
+  .party .floor i { animation: tiles 0.4s steps(1) 6; }
+  @keyframes tiles { 50% { filter: hue-rotate(140deg); } }
+
+  /* Sticker sheet */
+  .sheet {
+    background: var(--paper); border: 3px solid var(--ink); border-radius: 10px;
+    box-shadow: 10px 10px 0 var(--ink); padding: 28px 28px 40px; transform: rotate(-0.6deg); position: relative;
+  }
+  .sheet-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px 20px; margin-bottom: 26px; }
+  .sheet-head h2 { font: 400 34px/1 var(--display); margin: 0; }
+  .kinds { display: flex; flex-wrap: wrap; gap: 8px; margin-left: auto; }
+  .kinds button {
+    font: 500 15px var(--body); padding: 6px 14px; border: 3px solid var(--ink); border-radius: 999px;
+    background: var(--paper); cursor: pointer;
+  }
+  .kinds button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+  .stickers { display: flex; flex-wrap: wrap; gap: 30px 26px; justify-content: center; list-style: none; padding: 0; margin: 0; }
+  .sticker {
+    display: grid; place-content: center; justify-items: center; text-align: center; gap: 2px;
+    width: 220px; height: 176px; padding: 18px; text-decoration: none;
+    background: var(--c); color: var(--t, var(--ink));
+    border: 6px solid var(--paper); border-radius: var(--shape, 30px);
+    box-shadow: 0 0 0 3px var(--ink), 6px 8px 0 3px var(--ink);
+    transform: rotate(var(--r, 0deg)); transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .sticker:hover, .sticker:focus-visible { transform: rotate(0deg) translate(-3px, -5px) scale(1.04); box-shadow: 0 0 0 3px var(--ink), 11px 14px 0 3px var(--ink); }
+  .sticker .glyph { font: 500 30px/1 var(--mono); }
+  .sticker .name { font: 400 22px/1.05 var(--display); margin-top: 6px; }
+  .sticker .does { font-size: 14.5px; line-height: 1.25; max-width: 17ch; }
+  .s-circle { --shape: 50%; width: 196px; height: 196px; }
+  .s-pill { --shape: 999px; width: 260px; height: 150px; }
+  .s-blob { --shape: 58% 42% 52% 48% / 46% 58% 42% 54%; height: 190px; }
+  .s-leaf { --shape: 14px 70px 14px 70px; }
+  .s-arch { --shape: 110px 110px 16px 16px; height: 196px; }
+  .none { display: none; font: 400 24px var(--hand); text-align: center; margin: 10px 0 0; }
+  .note { font: 400 22px/1.2 var(--hand); position: absolute; right: 26px; bottom: 10px; transform: rotate(-3deg); margin: 0; }
+
+  /* Tool page */
+  .tool { padding: 8px 0 0; }
+  .tool-head { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin: 12px 0 22px; }
+  .tool-head h1 { font: 400 clamp(34px, 6vw, 60px)/1 var(--display); margin: 0; background: var(--gum); border: 3px solid var(--ink); box-shadow: 5px 5px 0 var(--ink); padding: 8px 16px 4px; transform: rotate(-1.5deg); }
+  .btn {
+    font: 500 16px var(--body); padding: 9px 18px; border: 3px solid var(--ink); border-radius: 999px;
+    background: var(--b, var(--paper)); color: var(--bt, var(--ink)); box-shadow: 4px 4px 0 var(--ink); cursor: pointer; text-decoration: none; display: inline-block;
+  }
+  .btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--ink); }
+  .page { background: var(--paper); border: 3px solid var(--ink); border-radius: 10px; box-shadow: 10px 10px 0 var(--ink); padding: 24px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 20px; }
+  .actions label { margin-left: auto; font-weight: 500; }
+  .actions select { font: 500 16px var(--body); padding: 7px 10px; border: 3px solid var(--ink); border-radius: 10px; background: var(--paper); }
+  .panes { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .pane label { display: inline-block; font: 400 20px/1 var(--display); padding: 7px 12px 4px; border: 3px solid var(--ink); border-bottom: 0; border-radius: 12px 12px 0 0; background: var(--tab); color: var(--tabt, var(--ink)); margin-left: 14px; }
+  .pane textarea {
+    display: block; width: 100%; height: 340px; resize: vertical; font: 400 14.5px/1.55 var(--mono); padding: 14px;
+    border: 3px solid var(--ink); border-radius: 14px; background: var(--paper); color: var(--ink);
+  }
+  .status { display: flex; align-items: flex-end; gap: 14px; margin-top: 20px; min-height: 76px; }
+  .status .bubble { margin: 0 0 14px; max-width: none; font-size: 22px; }
+  .status[data-state="error"] .bubble { background: var(--gum); }
+  .status[data-state="ok"] .bubble { background: var(--mint); }
+  .others { display: flex; flex-wrap: wrap; gap: 10px; margin: 28px 0 0; padding: 0; list-style: none; }
+  .others a { font: 500 15px var(--body); text-decoration: none; padding: 6px 14px; border: 3px solid var(--ink); border-radius: 999px; background: var(--c); color: var(--t, var(--ink)); display: inline-block; }
+  .soon { font: 400 26px/1.25 var(--hand); max-width: 30ch; }
+  footer { padding: 46px 0 34px; font-weight: 500; }
+  [hidden] { display: none !important; }
+
+  @media (max-width: 820px) {
+    .hero { grid-template-columns: 1fr; }
+    .mascot { justify-items: start; }
+    .panes { grid-template-columns: 1fr; }
+    .pane textarea { height: 220px; }
+    .sheet { padding: 20px 14px 56px; transform: none; }
+    .kinds { margin-left: 0; }
+    .actions label { margin-left: 0; }
+    .confetti svg:nth-child(n+4) { display: none; }
+  }
+  @media (max-width: 520px) {
+    .sticker, .s-pill, .s-circle { width: 100%; max-width: 280px; }
+    .s-circle { --shape: 40px; height: 176px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .sticker { transition: none; }
+    .party .floor i { animation: none; }
+  }
+</style>
+</head>
+<body>
+<div class="confetti" aria-hidden="true">
+  <svg style="right:8%;bottom:26px" width="150" height="40" viewBox="0 0 150 40"><path d="M4 30 L24 8 L44 30 L64 8 L84 30 L104 8 L124 30 L144 8" fill="none" stroke="#000" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/></svg>
+  <svg style="right:-40px;top:640px" width="150" height="150" viewBox="0 0 150 150"><circle cx="75" cy="75" r="62" fill="none" stroke="#2b3fe0" stroke-width="18"/></svg>
+  <svg style="left:-26px;top:520px" width="120" height="120" viewBox="0 0 120 120"><polygon points="10,100 60,8 112,104" fill="#ff6fb0" stroke="#000" stroke-width="5" stroke-linejoin="round"/></svg>
+  <svg style="left:8%;top:1010px" width="96" height="96" viewBox="0 0 96 96"><path d="M36 4h24v32h32v24H60v32H36V60H4V36h32z" fill="#2ed3a6" stroke="#000" stroke-width="5" stroke-linejoin="round"/></svg>
+  <svg style="right:6%;top:1090px" width="130" height="70" viewBox="0 0 130 70"><g fill="#000"><circle cx="10" cy="10" r="6"/><circle cx="40" cy="10" r="6"/><circle cx="70" cy="10" r="6"/><circle cx="100" cy="10" r="6"/><circle cx="25" cy="35" r="6"/><circle cx="55" cy="35" r="6"/><circle cx="85" cy="35" r="6"/><circle cx="115" cy="35" r="6"/><circle cx="10" cy="60" r="6"/><circle cx="40" cy="60" r="6"/><circle cx="70" cy="60" r="6"/><circle cx="100" cy="60" r="6"/></g></svg>
+</div>
+
+<div class="wrap">
+  <header class="bar">
+    <a class="mark" href="#">Bytebox</a>
+    <div class="search" id="searchBox">
+      <input id="q" type="search" placeholder="Find a tool" aria-label="Find a tool">
+    </div>
+  </header>
+
+  <!-- HOME -->
+  <main id="home">
+    <section class="hero">
+      <div>
+        <h1 class="cutout" aria-label="Bytebox">
+          <span style="--c:var(--gum);--r:-5deg">B</span>
+          <span style="--c:var(--paper);--r:3deg;--y:8px">Y</span>
+          <span style="--c:var(--cobalt);--t:#fff;--r:-2deg">T</span>
+          <span style="--c:var(--mint);--r:4deg;--y:-6px">E</span>
+          <span style="--c:var(--tang);--r:-4deg;--y:6px">B</span>
+          <span style="--c:var(--ink);--t:var(--sun);--r:2deg">O</span>
+          <span style="--c:var(--lilac);--r:-3deg;--y:10px">X</span>
+        </h1>
+        <p class="lede">Small tools for developers. They run in your browser, so nothing you paste gets uploaded.</p>
+      </div>
+      <div class="mascot">
+        <p class="bubble">Peel a sticker to open a tool.</p>
+        <div class="diecut">
+          <div class="cat" data-cat="idle" data-px="9"></div>
+          <div class="floor" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sheet" aria-labelledby="sheetTitle">
+      <div class="sheet-head">
+        <h2 id="sheetTitle">The sticker sheet</h2>
+        <div class="kinds" role="group" aria-label="Show a kind of tool">
+          <button aria-pressed="true" data-kind="all">All</button>
+          <button aria-pressed="false" data-kind="format">Format</button>
+          <button aria-pressed="false" data-kind="convert">Convert</button>
+          <button aria-pressed="false" data-kind="generate">Generate</button>
+          <button aria-pressed="false" data-kind="inspect">Inspect</button>
+        </div>
+      </div>
+      <ul class="stickers" id="stickers"></ul>
+      <p class="none" id="none">No sticker by that name. Try "json" or "uuid".</p>
+      <p class="note">more stickers coming!</p>
+    </section>
+  </main>
+
+  <!-- TOOL -->
+  <main id="tool" class="tool" hidden>
+    <div class="tool-head">
+      <a class="btn" href="#">Back to the sheet</a>
+      <h1 id="toolName">JSON formatter</h1>
+    </div>
+    <div class="page">
+      <div id="jsonTool">
+        <div class="actions">
+          <button class="btn" style="--b:var(--cobalt);--bt:#fff" id="fmt">Format</button>
+          <button class="btn" id="min">Minify</button>
+          <button class="btn" id="copy">Copy result</button>
+          <button class="btn" id="clear">Clear</button>
+          <label for="indent">Indent</label>
+          <select id="indent"><option value="2">2 spaces</option><option value="4">4 spaces</option><option value="tab">Tab</option></select>
+        </div>
+        <div class="panes">
+          <div class="pane" style="--tab:var(--sun)">
+            <label for="in">Paste JSON</label>
+            <textarea id="in" spellcheck="false"></textarea>
+          </div>
+          <div class="pane" style="--tab:var(--mint)">
+            <label for="out">Result</label>
+            <textarea id="out" spellcheck="false" readonly></textarea>
+          </div>
+        </div>
+        <div class="status" id="status" data-state="idle" aria-live="polite">
+          <div class="diecut" style="transform:rotate(-3deg);padding:8px 10px 0">
+            <div class="cat" id="statusCat" data-cat="sleepy" data-px="4"></div>
+            <div class="floor" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+          <p class="bubble" id="msg">Paste some JSON, then press Format.</p>
+        </div>
+      </div>
+      <p class="soon" id="soon" hidden>This tool isn't in the mockup yet. Only the JSON formatter works here.</p>
+      <ul class="others" id="others" aria-label="Other tools"></ul>
+    </div>
+  </main>
+
+  <footer>Bytebox is a static site. Your input stays on this device.</footer>
+</div>
+
+<script>
+const TOOLS = [
+  { id: 'json', glyph: '{ }', name: 'JSON formatter', does: 'Format, minify and validate', kind: 'format', c: 'gum', shape: 's-circle', r: -4 },
+  { id: 'base64', glyph: '64', name: 'Base64', does: 'Encode and decode text', kind: 'convert', c: 'cobalt', t: '#fff', shape: 's-pill', r: 3 },
+  { id: 'url', glyph: '%20', name: 'URL encoder', does: 'Escape and unescape URLs', kind: 'convert', c: 'mint', shape: 's-leaf', r: -2 },
+  { id: 'uuid', glyph: '#', name: 'UUID maker', does: 'Make UUIDs in bulk', kind: 'generate', c: 'tang', shape: 's-blob', r: 5 },
+  { id: 'hash', glyph: '##', name: 'Hash maker', does: 'SHA-1 and SHA-256 hashes', kind: 'generate', c: 'lilac', shape: 's-arch', r: -3 },
+  { id: 'jwt', glyph: 'a.b.c', name: 'JWT reader', does: 'Read a token\'s header and payload', kind: 'inspect', c: 'sun', shape: '', r: 4 },
+  { id: 'regex', glyph: '.*', name: 'Regex tester', does: 'Try a pattern on sample text', kind: 'inspect', c: 'ink', t: 'var(--sun)', shape: 's-circle', r: -5 },
+  { id: 'time', glyph: '1e9', name: 'Timestamp', does: 'Unix time to dates and back', kind: 'convert', c: 'gum', shape: 's-pill', r: 2 },
+];
+
+// 8-bit cat, drawn from a character grid
+const CAT = ['..d..........d..', '.dod........dod.', '.dood......dood.', '.doooddddddoood.', '.dooooooooooood.', '.dooooooooooood.', '.dowkoooooowkod.', '.dowkoooooowkod.', '.doooooppoooood.', '.dpooodoodooopd.', '.doooooddoooood.', '.dooooooooooood.', '..dddddddddddd..'];
+const FACES = {
+  idle: {},
+  disco: { 6: '.dkkkkkkkkkkkkd.', 7: '.dokckkookckkod.' },
+  alarmed: { 5: '.dowwwoooowwwod.', 6: '.dowkwoooowkwod.', 7: '.dowwwoooowwwod.', 9: '.dpooooddoooopd.' },
+  sleepy: { 6: '.dooooooooooood.', 7: '.dokkkooookkkod.' },
+};
+const INKS = { o: '#ff7a2f', d: '#000', w: '#fff', k: '#000', p: '#ff6fb0', c: '#2ed3a6' };
+function drawCat(el, state) {
+  const px = +el.dataset.px, rows = CAT.map((r, i) => FACES[state][i] || r);
+  let s = `<svg width="${16 * px}" height="${13 * px}" viewBox="0 0 16 13" shape-rendering="crispEdges" role="img" aria-label="Pixel cat, ${state}">`;
+  rows.forEach((r, y) => [...r].forEach((ch, x) => { if (ch !== '.') s += `<rect x="${x}" y="${y}" width="1" height="1" fill="${INKS[ch]}"/>`; }));
+  el.innerHTML = s + '</svg>'; el.dataset.cat = state;
+}
+document.querySelectorAll('.cat').forEach(el => drawCat(el, el.dataset.cat));
+
+// Sticker sheet
+const $ = id => document.getElementById(id);
+$('stickers').innerHTML = TOOLS.map(t => `<li data-kind="${t.kind}" data-text="${(t.name + ' ' + t.does + ' ' + t.id).toLowerCase()}"><a class="sticker ${t.shape}" href="#${t.id}" style="--c:var(--${t.c});${t.t ? `--t:${t.t};` : ''}--r:${t.r}deg"><span class="glyph" aria-hidden="true">${t.glyph}</span><span class="name">${t.name}</span><span class="does">${t.does}</span></a></li>`).join('');
+let kind = 'all';
+function filter() {
+  const q = $('q').value.trim().toLowerCase(); let shown = 0;
+  document.querySelectorAll('#stickers li').forEach(li => { const ok = (kind === 'all' || li.dataset.kind === kind) && li.dataset.text.includes(q); li.hidden = !ok; if (ok) shown++; });
+  $('none').style.display = shown ? 'none' : 'block';
+}
+$('q').addEventListener('input', () => { if (current) go(''); filter(); });
+document.querySelectorAll('.kinds button').forEach(b => b.addEventListener('click', () => { kind = b.dataset.kind; document.querySelectorAll('.kinds button').forEach(x => x.setAttribute('aria-pressed', x === b)); filter(); }));
+
+// Routing between the sheet and a tool
+let current = location.hash.slice(1);
+function go(id) { current = id; try { history.replaceState(null, '', '#' + id); } catch {} route(); }
+document.addEventListener('click', e => { const a = e.target.closest('a[href^="#"]'); if (a) { e.preventDefault(); go(a.getAttribute('href').slice(1)); } });
+function route() {
+  const t = TOOLS.find(t => t.id === current);
+  $('home').hidden = !!t; $('tool').hidden = !t;
+  if (!t) return;
+  $('toolName').textContent = t.name; $('toolName').style.background = `var(--${t.c})`; $('toolName').style.color = t.t || '';
+  $('jsonTool').hidden = t.id !== 'json'; $('soon').hidden = t.id === 'json';
+  $('others').innerHTML = TOOLS.filter(o => o.id !== t.id).map(o => `<li><a href="#${o.id}" style="--c:var(--${o.c});${o.t ? `--t:${o.t}` : ''}">${o.name}</a></li>`).join('');
+  window.scrollTo(0, 0);
+}
+addEventListener('hashchange', () => { current = location.hash.slice(1); route(); });
+
+// JSON formatter
+const say = (state, text, cat) => { $('status').dataset.state = state; $('msg').textContent = text; drawCat($('statusCat'), cat); };
+function run(minify) {
+  const src = $('in').value.trim();
+  if (!src) return say('idle', 'Paste some JSON, then press Format.', 'sleepy');
+  try {
+    const v = $('indent').value, out = JSON.stringify(JSON.parse(src), null, minify ? 0 : v === 'tab' ? '\t' : +v);
+    $('out').value = out;
+    const n = out.split('\n').length;
+    say('ok', minify ? `Valid JSON, squeezed to ${out.length} characters.` : `Valid JSON, ${n} ${n === 1 ? 'line' : 'lines'}.`, 'disco');
+    const d = $('status').querySelector('.diecut'); d.classList.remove('party'); void d.offsetWidth; d.classList.add('party');
+  } catch (e) {
+    $('out').value = '';
+    say('error', `That isn't valid JSON. ${e.message}`, 'alarmed');
+  }
+}
+$('fmt').onclick = () => run(false);
+$('min').onclick = () => run(true);
+$('clear').onclick = () => { $('in').value = ''; $('out').value = ''; say('idle', 'Paste some JSON, then press Format.', 'sleepy'); $('in').focus(); };
+$('copy').onclick = async () => {
+  if (!$('out').value) return say('idle', 'Nothing to copy yet. Format something first.', 'idle');
+  try { await navigator.clipboard.writeText($('out').value); say('ok', 'Copied the result.', 'disco'); }
+  catch { say('error', "The browser blocked copying. Select the result and copy it by hand.", 'alarmed'); }
+};
+$('in').value = '{"name":"bytebox","tools":["json","base64","uuid"],"uploads":false,"lives":9}';
+route(); filter();
+</script>
+</body>
+</html>
