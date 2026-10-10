@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ToolGuide } from "@/components/ToolGuide";
 import { ToolView } from "@/components/ToolView";
+import { guides } from "@/tools/guides";
 import { pageUrl, SITE_NAME } from "@/lib/site";
 import { getTool, tools, type Tool } from "@/tools/registry";
 
@@ -48,6 +50,7 @@ function structuredData(tool: Tool) {
 export default async function ToolPage({ params }: Props) {
   const tool = getTool((await params).slug);
   if (!tool) notFound();
+  const guide = guides[tool.slug];
 
   return (
     <main className="tool">
@@ -68,6 +71,7 @@ export default async function ToolPage({ params }: Props) {
             ))}
         </ul>
       </div>
+      {guide && <ToolGuide tool={tool} guide={guide} />}
     </main>
   );
 }
