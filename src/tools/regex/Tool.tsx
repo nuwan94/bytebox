@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { failed, ok, Status, waiting, type StatusInfo } from "@/components/Status";
 import { findMatches, MATCH_LIMIT, toSegments } from "./logic";
+import { COMMON_PATTERNS, PIECES, SAMPLE_TEXT } from "./patterns";
 
 const FLAGS = [
   { flag: "i", label: "Ignore case" },
@@ -10,10 +11,8 @@ const FLAGS = [
   { flag: "s", label: ". matches line breaks" },
 ];
 
-const SAMPLE_TEXT = "Order 1042 shipped on 2026-03-14.\nOrder 1043 is waiting.\nRefund 77 was issued on 2026-03-15.";
-
 export default function RegexTester() {
-  const [pattern, setPattern] = useState("\\d{4}-\\d{2}-\\d{2}");
+  const [pattern, setPattern] = useState(COMMON_PATTERNS[3].pattern);
   const [flags, setFlags] = useState("");
   const [text, setText] = useState(SAMPLE_TEXT);
 
@@ -22,7 +21,7 @@ export default function RegexTester() {
 
   let status: StatusInfo;
   if (!result.ok) status = failed(`That pattern doesn't compile. ${result.error}`);
-  else if (!pattern) status = waiting("Type a pattern to start matching.");
+  else if (!pattern) status = waiting("Pick a common pattern or type your own.");
   else if (result.matches.length === 0) status = { tone: "idle", text: "No matches in the sample text.", cat: "idle" };
   else if (result.capped) status = ok(`More than ${MATCH_LIMIT} matches. Showing the first ${MATCH_LIMIT}.`);
   else status = ok(`${result.matches.length} ${result.matches.length === 1 ? "match" : "matches"}.`);
@@ -36,6 +35,25 @@ export default function RegexTester() {
       <div className="pane" data-color="sun">
         <label htmlFor="regex-pattern">Pattern</label>
         <input id="regex-pattern" className="input" spellCheck={false} value={pattern} onChange={(event) => setPattern(event.target.value)} />
+      </div>
+      <div className="builder">
+        <h2 id="regex-common">Start from a common pattern</h2>
+        <div className="chips" role="group" aria-labelledby="regex-common">
+          {COMMON_PATTERNS.map((item) => (
+            <button key={item.name} aria-pressed={pattern === item.pattern} onClick={() => setPattern(item.pattern)}>
+              {item.name}
+            </button>
+          ))}
+        </div>
+        <h2 id="regex-pieces">Add a piece to the end</h2>
+        <div className="chips" role="group" aria-labelledby="regex-pieces">
+          {PIECES.map((piece) => (
+            <button key={piece.name} onClick={() => setPattern((current) => current + piece.insert)}>
+              {piece.name} <code>{piece.insert}</code>
+            </button>
+          ))}
+          <button className="chip-plain" onClick={() => setPattern("")}>Clear pattern</button>
+        </div>
       </div>
       <div className="options options-row">
         {FLAGS.map(({ flag, label }) => (
