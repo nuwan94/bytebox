@@ -21,6 +21,7 @@ export const metadata: Metadata = {
   alternates: { canonical: pageUrl("/") },
   openGraph: { type: "website", siteName: SITE_NAME, url: pageUrl("/"), title: "Bytebox: developer tools that run in your browser", description: SITE_DESCRIPTION },
   twitter: { card: "summary_large_image" },
+  verification: { google: "xY6Lj6K_vFQjAG6PpATMA6TFhHNj57xPsnvA0TbpJKM" },
 };
 
 export const viewport: Viewport = { themeColor: "#ffd400" };
