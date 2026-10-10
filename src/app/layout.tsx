@@ -1,8 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Mono, Gochi_Hand, Rubik, Titan_One } from "next/font/google";
 import Link from "next/link";
+import Script from "next/script";
 import type { ReactNode } from "react";
 import { Confetti } from "@/components/Confetti";
+import { GA_MEASUREMENT_ID, pageUrl, SITE_DESCRIPTION, SITE_NAME, SITE_URL, SPONSOR_URL } from "@/lib/site";
 import "./globals.css";
 
 const display = Titan_One({ weight: "400", subsets: ["latin"], variable: "--font-display" });
@@ -11,9 +13,17 @@ const hand = Gochi_Hand({ weight: "400", subsets: ["latin"], variable: "--font-h
 const mono = DM_Mono({ weight: ["400", "500"], subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
-  title: { default: "Bytebox", template: "%s | Bytebox" },
-  description: "Small tools for developers. They run in your browser, so nothing you paste gets uploaded.",
+  metadataBase: new URL(`${SITE_URL}/`),
+  title: { default: "Bytebox: developer tools that run in your browser", template: "%s | Bytebox" },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  authors: [{ name: "Nuwan Alawatta", url: "https://nuwan.dev" }],
+  alternates: { canonical: pageUrl("/") },
+  openGraph: { type: "website", siteName: SITE_NAME, url: pageUrl("/"), title: "Bytebox: developer tools that run in your browser", description: SITE_DESCRIPTION },
+  twitter: { card: "summary_large_image" },
 };
+
+export const viewport: Viewport = { themeColor: "#ffd400" };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -28,8 +38,21 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <footer>
             <span>Bytebox is a static site. Your input stays on this device.</span>
             <a className="maker" href="https://nuwan.dev">nuwan.dev</a>
+            <a className="sponsor" href={SPONSOR_URL}>Sponsor on GitHub</a>
           </footer>
         </div>
+        {/* Google Analytics: page views only, and only on the deployed site. */}
+        {process.env.NODE_ENV === "production" && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} strategy="afterInteractive" />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GA_MEASUREMENT_ID}');`}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );

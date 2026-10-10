@@ -25,6 +25,14 @@ export const tools: Tool[] = [
   { slug: "jwt", glyph: "a.b.c", name: "JWT reader", does: "Read a token's header and payload", kind: "inspect", color: "sun", shape: "squircle", tilt: 4 },
   { slug: "regex", glyph: ".*", name: "Regex tester", does: "Build a pattern and try it on text", kind: "inspect", color: "ink", shape: "circle", tilt: -5 },
   { slug: "timestamp", glyph: "1e9", name: "Timestamp", does: "Unix time to dates and back", kind: "convert", color: "gum", shape: "pill", tilt: 2 },
+  { slug: "case-converter", glyph: "aA", name: "Case converter", does: "Camel, snake, kebab and more", kind: "convert", color: "mint", shape: "squircle", tilt: 3 },
+  { slug: "text-diff", glyph: "+ -", name: "Text diff", does: "Compare two texts line by line", kind: "inspect", color: "sun", shape: "leaf", tilt: -4 },
+  { slug: "colour-converter", glyph: "#f0f", name: "Colour converter", does: "HEX, RGB and HSL", kind: "convert", color: "lilac", shape: "blob", tilt: 4 },
+  { slug: "password", glyph: "***", name: "Password maker", does: "Random passwords, made locally", kind: "generate", color: "ink", shape: "pill", tilt: -2 },
+  { slug: "number-bases", glyph: "0x", name: "Number bases", does: "Binary, octal, decimal and hex", kind: "convert", color: "tang", shape: "circle", tilt: 2 },
+  { slug: "line-sorter", glyph: "a-z", name: "Line sorter", does: "Sort, trim and dedupe lines", kind: "format", color: "cobalt", shape: "arch", tilt: -3 },
+  { slug: "text-counter", glyph: "123", name: "Text counter", does: "Characters, words, lines, bytes", kind: "inspect", color: "gum", shape: "squircle", tilt: 5 },
+  { slug: "lorem-ipsum", glyph: "¶", name: "Lorem ipsum", does: "Placeholder paragraphs", kind: "generate", color: "mint", shape: "leaf", tilt: -5 },
 ];
 
 export const kinds: { id: ToolKind | "all"; label: string }[] = [

@@ -14,4 +14,12 @@ export const toolComponents: Record<string, ComponentType> = {
   jwt: dynamic(() => import("./jwt/Tool")),
   regex: dynamic(() => import("./regex/Tool")),
   timestamp: dynamic(() => import("./timestamp/Tool")),
+  "case-converter": dynamic(() => import("./case-converter/Tool")),
+  "text-diff": dynamic(() => import("./text-diff/Tool")),
+  "colour-converter": dynamic(() => import("./colour-converter/Tool")),
+  password: dynamic(() => import("./password/Tool")),
+  "number-bases": dynamic(() => import("./number-bases/Tool")),
+  "line-sorter": dynamic(() => import("./line-sorter/Tool")),
+  "text-counter": dynamic(() => import("./text-counter/Tool")),
+  "lorem-ipsum": dynamic(() => import("./lorem-ipsum/Tool")),
 };

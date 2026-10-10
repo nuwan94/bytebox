@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { Cat } from "@/components/Cat";
 import { StickerSheet } from "@/components/StickerSheet";
+import { pageUrl, SITE_DESCRIPTION, SITE_NAME } from "@/lib/site";
 
 // One paper scrap per letter: background, text colour, rotation, vertical nudge.
 const LETTERS: [string, string, string, number, number][] = [
@@ -16,6 +17,12 @@ const LETTERS: [string, string, string, number, number][] = [
 export default function Home() {
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({ "@context": "https://schema.org", "@type": "WebSite", name: SITE_NAME, url: pageUrl("/"), description: SITE_DESCRIPTION }),
+        }}
+      />
       <section className="hero">
         <div>
           <h1 className="cutout" aria-label="Bytebox">
