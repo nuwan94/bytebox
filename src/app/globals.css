@@ -218,6 +218,14 @@ a { color: inherit; }
 }
 .soon { font: 400 26px/1.25 var(--hand); max-width: 30ch; margin: 0; }
 footer { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 46px 0 34px; font-weight: 500; position: relative; }
+.foot-links { display: flex; gap: 16px; }
+.foot-links a { text-underline-offset: 3px; text-decoration-thickness: 2px; }
+.article { max-width: 68ch; }
+.article > :first-child { margin-top: 0; }
+.article h2 { font: 400 24px/1.15 var(--display); margin: 34px 0 8px; }
+.article p { margin: 0 0 14px; }
+.article a { color: var(--cobalt); font-weight: 500; text-underline-offset: 3px; text-decoration-thickness: 2px; }
+.article-note { font: 400 21px/1.2 var(--hand); }
 .sponsor {
   font: 500 15px var(--body); text-decoration: none; padding: 6px 14px; margin-left: auto;
   border: 3px solid var(--ink); border-radius: 999px; background: var(--gum); color: var(--ink); box-shadow: 4px 4px 0 var(--ink);

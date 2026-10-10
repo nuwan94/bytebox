@@ -36,7 +36,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </header>
           {children}
           <footer>
-            <span>Bytebox is a static site. Your input stays on this device.</span>
+            <span>What you paste into a tool stays on this device.</span>
+            <nav className="foot-links" aria-label="About this site">
+              <Link href="/about/">About</Link>
+              <Link href="/privacy/">Privacy</Link>
+              <Link href="/contact/">Contact</Link>
+            </nav>
             <a className="maker" href="https://nuwan.dev">nuwan.dev</a>
             <a className="sponsor" href={SPONSOR_URL}>Sponsor on GitHub</a>
           </footer>
