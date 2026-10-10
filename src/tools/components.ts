@@ -7,4 +7,11 @@ import type { ComponentType } from "react";
 // never weighs on the others.
 export const toolComponents: Record<string, ComponentType> = {
   "json-formatter": dynamic(() => import("./json-formatter/Tool")),
+  base64: dynamic(() => import("./base64/Tool")),
+  "url-encoder": dynamic(() => import("./url-encoder/Tool")),
+  uuid: dynamic(() => import("./uuid/Tool")),
+  hash: dynamic(() => import("./hash/Tool")),
+  jwt: dynamic(() => import("./jwt/Tool")),
+  regex: dynamic(() => import("./regex/Tool")),
+  timestamp: dynamic(() => import("./timestamp/Tool")),
 };
