@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </header>
           {children}
           <footer>
-            <span>What you paste into a tool stays on this device.</span>
+            <span>What you paste into a tool stays on this device. © 2026 Nuwan Alawatta.</span>
             <nav className="foot-links" aria-label="About this site">
               <Link href="/about/">About</Link>
               <Link href="/privacy/">Privacy</Link>

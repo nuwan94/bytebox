@@ -405,7 +405,7 @@ export const guides: Record<string, ToolGuide> = {
     faqs: [
       {
         q: "Is it safe to make a password on a website?",
-        a: "This one is generated on your device and is not sent or stored. You can check that in the source code, which is public, or by disconnecting from the internet before pressing the button. Any page can be changed later, though, so a password manager's built-in generator is the more cautious choice for your most important accounts.",
+        a: "This one is generated on your device and is not sent or stored. You can check that by disconnecting from the internet before pressing the button: it still works. Any page can be changed later, though, so a password manager's built-in generator is the more cautious choice for your most important accounts.",
       },
       {
         q: "How long should a password be?",
@@ -551,6 +551,287 @@ export const guides: Record<string, ToolGuide> = {
       {
         q: "Does lorem ipsum mean anything?",
         a: "It comes from a work by Cicero, scrambled long ago so that it no longer reads as proper Latin.",
+      },
+    ],
+  },
+
+  "json-yaml": {
+    about: [
+      "JSON and YAML describe the same kinds of data: objects, lists, strings, numbers, booleans and null. JSON is what APIs and most programs exchange; YAML is what people tend to write by hand, in Kubernetes manifests, GitHub Actions workflows, Docker Compose files and many app configs. This tool converts in either direction.",
+      "It uses the yaml library with YAML 1.2 rules. That matters for a few values: yes, no, on and off stay as text rather than turning into true or false, and a date such as 2026-01-01 stays a string. Anchors and aliases in YAML are expanded in the JSON, so each place an alias was used gets its own full copy.",
+    ],
+    steps: [
+      "Paste JSON or YAML into the box on the left.",
+      "Press JSON to YAML or YAML to JSON.",
+      "If the input has a mistake, the cat tells you what the parser found and where.",
+      "Press Copy result to take the converted text.",
+    ],
+    example: {
+      caption: "A small JSON object as YAML",
+      input: '{"name":"bytebox","port":8080,"tools":["json","yaml"]}',
+      output: "name: bytebox\nport: 8080\ntools:\n  - json\n  - yaml",
+    },
+    faqs: [
+      {
+        q: "What happens to comments in YAML?",
+        a: "They are lost. JSON has no comment syntax, so there is nowhere to put them. Converting back to YAML will not bring them back.",
+      },
+      {
+        q: "Can it convert a file with several YAML documents separated by ---?",
+        a: "No. It reads a single document and reports an error if it finds more than one. Convert each document separately.",
+      },
+      {
+        q: "Why are some strings quoted in the YAML output?",
+        a: "Text that YAML would otherwise read as something else, such as a number, true, null or a value starting with a special character, is quoted so it stays a string when read back.",
+      },
+      {
+        q: "Is my config sent anywhere?",
+        a: "No. The conversion happens in your browser, which matters for files that hold hostnames, keys or other private settings.",
+      },
+    ],
+  },
+
+  "json-to-ts": {
+    about: [
+      "When you start using an API from TypeScript, writing interfaces for its responses by hand is slow and easy to get wrong. Paste a sample response here and the tool writes the interfaces for you, one per nested object, named after the keys they sit under.",
+      "It looks at every value, not just the first. If the items in an array have different keys, they are merged into one interface, and a key missing from some items is marked optional with a question mark. Arrays that mix kinds of values get a union type such as (number | string)[].",
+      "The result describes only the sample you gave it. Treat it as a starting point and tighten it by hand where you know more than the sample shows.",
+    ],
+    steps: [
+      "Paste a JSON sample, ideally a real response with as many fields filled in as possible.",
+      "Change the root name if you want something more specific than Root.",
+      "Press Make types.",
+      "Copy the interfaces into your code and adjust the names to taste.",
+    ],
+    example: {
+      caption: "Array items with different keys become one interface with an optional field",
+      input: '{"items":[{"a":1},{"a":2,"b":"x"}]}',
+      output: "export interface Root {\n  items: Item[];\n}\n\nexport interface Item {\n  a: number;\n  b?: string;\n}",
+    },
+    faqs: [
+      {
+        q: "How are the interfaces named?",
+        a: "After the key that holds the object, in Pascal case. Array keys are made singular, so items gives Item and categories gives Category. If two objects would get the same name, the second gets a number, such as User2.",
+      },
+      {
+        q: "What type does null get?",
+        a: "The type null. If the same field is null in one item and a string in another, it becomes string | null. A field that is null in your whole sample tells the tool nothing more, so replace it with the real type by hand.",
+      },
+      {
+        q: "What about an empty array?",
+        a: "It becomes unknown[], because there is nothing in it to learn from.",
+      },
+      {
+        q: "Does it handle keys with dashes or spaces?",
+        a: "Yes. Keys that are not valid identifiers are written in quotes, such as \"first-name\": string.",
+      },
+    ],
+  },
+
+  "qr-code": {
+    about: [
+      "A QR code stores text in a square pattern that phone cameras can read. Most hold a link, but they can carry any text: a Wi-Fi setup string, a phone number, a short note. This tool draws the code as you type and lets you download it as a PNG for documents and slides or as an SVG that stays sharp at any size, which is best for print.",
+      "Error correction adds spare data so a code still scans when part of it is dirty, creased or covered by a logo. Higher levels survive more damage but need more squares, so the code gets denser. Medium suits most uses on screen and paper.",
+    ],
+    steps: [
+      "Type or paste the link or text.",
+      "Pick an error correction level if you need more than the default.",
+      "Check the preview with your phone's camera.",
+      "Press Download PNG or Download SVG.",
+    ],
+    faqs: [
+      {
+        q: "How much text can a QR code hold?",
+        a: "Up to about 2,900 characters of plain text at the Low level, and less at higher levels. Long text makes a dense code that is hard to scan, so keep it short. If the text is too long, the cat says so.",
+      },
+      {
+        q: "Do these codes expire?",
+        a: "No. The text is stored in the pattern itself and nothing points back to this site, so the code works for as long as whatever it contains does.",
+      },
+      {
+        q: "How big is the PNG?",
+        a: "1024 pixels square, with a quiet white border around the code, which scanners need. The SVG has no fixed size.",
+      },
+      {
+        q: "Can I add a logo in the middle?",
+        a: "Not in this tool. If you add one in an image editor, choose the High level first and keep the logo small, then test that it still scans.",
+      },
+    ],
+  },
+
+  cron: {
+    about: [
+      "Cron expressions schedule jobs on Unix systems, in Kubernetes CronJobs, GitHub Actions and many hosted schedulers. Five short fields are easy to misread, so this tool describes the schedule in plain English and lists the next ten times it will run.",
+      "The fields are minute, hour, day of the month, month and day of the week. Each accepts a star for every value, a number, a range such as 1-5, a list such as 1,15, or a step such as */10. Months and weekdays can also be written as three-letter names like JAN or MON, and Sunday can be 0 or 7. Shortcuts such as @daily and @hourly work too.",
+      "When both the day of the month and the day of the week are set, standard cron runs the job on days that match either one, not both. The run list follows that rule, which surprises many people.",
+    ],
+    steps: [
+      "Type a cron expression, or pick one of the examples.",
+      "Read the description under the cat.",
+      "Check the next runs. They are shown in your computer's time zone; tick Show in UTC if your server runs on UTC.",
+    ],
+    example: {
+      caption: "Every weekday morning",
+      input: "0 9 * * 1-5",
+      output: "At 09:00, Monday through Friday",
+    },
+    faqs: [
+      {
+        q: "Does it support a seconds field or Quartz syntax?",
+        a: "No. It reads the standard five fields. Six- or seven-field Quartz expressions and the special characters ?, L, W and # are reported as errors.",
+      },
+      {
+        q: "Why does 0 0 13 * 5 run on more than Friday the 13th?",
+        a: "Because cron joins the two day fields with or. That expression runs on the 13th of every month and on every Friday.",
+      },
+      {
+        q: "What time zone will my job use?",
+        a: "Whatever the system running it uses. Plain cron uses the server's local time, and GitHub Actions uses UTC. The UTC option here helps you check the second case.",
+      },
+      {
+        q: "What if the date never comes, such as 30 February?",
+        a: "The tool searches eight years ahead. If nothing matches in that time, the cat tells you the schedule never runs.",
+      },
+    ],
+  },
+
+  "sql-formatter": {
+    about: [
+      "A query copied from a log or written in a hurry often ends up on one long line. The SQL formatter breaks it up so each clause starts on its own line and the columns, joins and conditions are indented under it, which makes it far easier to review or debug.",
+      "Dialects differ in their keywords, quoting and operators, so pick the one your database uses: standard SQL, PostgreSQL, MySQL, SQLite, SQL Server, Oracle, BigQuery or Snowflake. You can also choose whether keywords come out in upper case, lower case or as you typed them.",
+    ],
+    steps: [
+      "Paste one or more SQL statements.",
+      "Choose the dialect and the keyword case.",
+      "Press Format, then Copy result.",
+    ],
+    example: {
+      caption: "A one-line query, formatted as standard SQL",
+      input: "select id,name from users where id=1",
+      output: "SELECT\n  id,\n  name\nFROM\n  users\nWHERE\n  id = 1",
+    },
+    faqs: [
+      {
+        q: "Does it check that my query is correct?",
+        a: "No. It only changes the layout. It reports an error when it cannot make sense of the text at all, such as an unclosed bracket, but it does not know your tables or run anything.",
+      },
+      {
+        q: "Will formatting change what the query does?",
+        a: "No. Only spaces, line breaks and the case of keywords change. Names, strings and values are left as they are.",
+      },
+      {
+        q: "Are comments kept?",
+        a: "Yes, both -- line comments and /* block comments */ stay in place.",
+      },
+      {
+        q: "Which formatting library does it use?",
+        a: "The open source sql-formatter library, with two-space indentation.",
+      },
+    ],
+  },
+
+  markdown: {
+    about: [
+      "Markdown is the plain-text format behind README files, GitHub issues, documentation sites and many note apps. This tool shows how your Markdown will look as you type, so you can check a README or a long comment before you post it.",
+      "It follows GitHub Flavored Markdown, so tables, task lists with checkboxes, strikethrough and fenced code blocks work as they do on GitHub. Copy HTML gives you the rendered HTML for pasting into a page or an email template.",
+      "Before anything is shown, the HTML is cleaned with DOMPurify, which removes scripts and other unsafe markup. That keeps the preview safe even when you paste Markdown from somewhere you don't trust.",
+    ],
+    steps: [
+      "Type or paste Markdown into the left box.",
+      "Watch the preview on the right update as you go.",
+      "Press Copy HTML if you need the HTML itself.",
+    ],
+    example: {
+      caption: "Markdown and the HTML it turns into",
+      input: "# Hi\n\nSome **bold** and `code`.",
+      output: "<h1>Hi</h1>\n<p>Some <strong>bold</strong> and <code>code</code>.</p>",
+    },
+    faqs: [
+      {
+        q: "Will it look exactly like GitHub?",
+        a: "The structure will match, but the styling is this site's own. Code blocks are not colour-highlighted, and GitHub extras such as @mentions, issue links and emoji shortcodes are not converted.",
+      },
+      {
+        q: "Can I use raw HTML in my Markdown?",
+        a: "Yes, safe HTML such as <details> or <kbd> is kept. Scripts, event handlers and similar are removed.",
+      },
+      {
+        q: "Is the copied HTML cleaned too?",
+        a: "Yes. Copy HTML gives the same cleaned HTML that the preview shows.",
+      },
+      {
+        q: "Is my text saved?",
+        a: "No. It lives only in this page and is gone when you close or reload it.",
+      },
+    ],
+  },
+
+  "html-entities": {
+    about: [
+      "Some characters have a special meaning in HTML. A < starts a tag and an & starts an entity, so showing them as text means writing them as entities such as &lt; and &amp;. Encode does that for the five characters that matter: &, <, >, double quotes and single quotes. The result is safe to place inside HTML text or an attribute.",
+      "Decode goes the other way. It reads numeric references such as &#169; and &#xA9;, and about fifty common named ones such as &copy;, &nbsp;, &mdash; and &eacute;. A name it does not know is left as it is rather than guessed.",
+    ],
+    steps: [
+      "Paste text or HTML into the left box.",
+      "Tick Also encode non-ASCII if the HTML must be pure ASCII, for example in an old email system.",
+      "Press Encode or Decode, then Copy result.",
+    ],
+    example: {
+      caption: "A snippet of HTML, encoded",
+      input: '<a href="x">Tom & Jerry</a>',
+      output: "&lt;a href=&quot;x&quot;&gt;Tom &amp; Jerry&lt;/a&gt;",
+    },
+    faqs: [
+      {
+        q: "Why is the single quote written as &#39; and not &apos;?",
+        a: "&apos; was not part of HTML 4, so some older software does not understand it. &#39; works everywhere.",
+      },
+      {
+        q: "What does Also encode non-ASCII do?",
+        a: "It turns every character outside plain ASCII into a numeric reference, so é becomes &#xE9; and emoji are written as one reference each. Modern pages served as UTF-8 do not need this.",
+      },
+      {
+        q: "Does decoding twice cause problems?",
+        a: "Each press decodes one layer, so &amp;amp; becomes &amp; and a second press gives &. That lets you unpick text that was escaped twice by mistake.",
+      },
+      {
+        q: "Are entity names case-sensitive?",
+        a: "Yes, as in HTML. &Eacute; is É, &eacute; is é, and &AMP; is not decoded.",
+      },
+    ],
+  },
+
+  "url-parser": {
+    about: [
+      "A long URL packs a lot into one line: the scheme, the host, a port, a path, a query string with several parameters and a fragment. The URL parser splits it into those parts and decodes each query parameter, so you can see what a tracking link, OAuth redirect or API request actually carries.",
+      "It uses the browser's own URL parser, the same one that decides where a link goes. Percent escapes in the path and parameters are decoded for display, a plus sign in a query value is shown as a space, and a parameter that appears more than once is listed once for each value.",
+    ],
+    steps: [
+      "Paste a full URL, including the scheme such as https://.",
+      "Read the parts, then the query parameters below them. Both update as you type.",
+      "Press Copy next to any part or value to take it.",
+    ],
+    example: {
+      caption: "A query string, decoded",
+      input: "https://x.dev/search?q=caf%C3%A9+au+lait&tag=a&tag=b",
+      output: "q = café au lait\ntag = a\ntag = b",
+    },
+    faqs: [
+      {
+        q: "Why is the port missing for my URL?",
+        a: "Browsers drop a port that is the default for the scheme, such as 443 for https or 80 for http, so it is not shown.",
+      },
+      {
+        q: "Why does it say my URL is not full?",
+        a: "Without a scheme, example.com/page is not a URL to the browser but a relative path. Add https:// at the start.",
+      },
+      {
+        q: "Why does an international domain look odd?",
+        a: "The browser shows the host in its ASCII form, called punycode, so a domain with accented letters appears as xn-- followed by letters. That is the name DNS actually uses.",
+      },
+      {
+        q: "Is the URL visited?",
+        a: "No. It is only read as text. Nothing is fetched from it.",
       },
     ],
   },

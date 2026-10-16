@@ -33,6 +33,14 @@ export const tools: Tool[] = [
   { slug: "line-sorter", glyph: "a-z", name: "Line sorter", does: "Sort, trim and dedupe lines", kind: "format", color: "cobalt", shape: "arch", tilt: -3 },
   { slug: "text-counter", glyph: "123", name: "Text counter", does: "Characters, words, lines, bytes", kind: "inspect", color: "gum", shape: "squircle", tilt: 5 },
   { slug: "lorem-ipsum", glyph: "¶", name: "Lorem ipsum", does: "Placeholder paragraphs", kind: "generate", color: "mint", shape: "leaf", tilt: -5 },
+  { slug: "json-yaml", glyph: "y:", name: "JSON and YAML", does: "Convert between JSON and YAML", kind: "convert", color: "sun", shape: "blob", tilt: 3 },
+  { slug: "json-to-ts", glyph: "TS", name: "JSON to TypeScript", does: "Interfaces from a JSON sample", kind: "convert", color: "cobalt", shape: "squircle", tilt: -4 },
+  { slug: "qr-code", glyph: "▚▞", name: "QR code maker", does: "QR codes as PNG or SVG", kind: "generate", color: "lilac", shape: "circle", tilt: 4 },
+  { slug: "cron", glyph: "*/5", name: "Cron explainer", does: "Read a schedule and its next runs", kind: "inspect", color: "tang", shape: "pill", tilt: -3 },
+  { slug: "sql-formatter", glyph: "SQL", name: "SQL formatter", does: "Tidy queries in eight dialects", kind: "format", color: "mint", shape: "arch", tilt: 2 },
+  { slug: "markdown", glyph: "M↓", name: "Markdown preview", does: "Render Markdown and copy the HTML", kind: "format", color: "gum", shape: "leaf", tilt: -2 },
+  { slug: "html-entities", glyph: "&lt;", name: "HTML entities", does: "Escape and unescape HTML", kind: "convert", color: "ink", shape: "blob", tilt: 5 },
+  { slug: "url-parser", glyph: "://", name: "URL parser", does: "Split a URL and its query", kind: "inspect", color: "sun", shape: "squircle", tilt: -4 },
 ];
 
 export const kinds: { id: ToolKind | "all"; label: string }[] = [

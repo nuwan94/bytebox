@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ConsentChoice } from "@/components/ConsentChoice";
 import { InfoPage } from "@/components/InfoPage";
-import { CONTACT_EMAIL, pageUrl, REPO_URL } from "@/lib/site";
+import { CONTACT_EMAIL, pageUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy policy",
@@ -70,7 +70,7 @@ export default function Privacy() {
 
       <h2>Links to other sites</h2>
       <p>
-        Bytebox links to GitHub and to nuwan.dev. Those sites have their own privacy policies, and this one does not
+        Bytebox links to GitHub Sponsors and to nuwan.dev. Those sites have their own privacy policies, and this one does not
         cover them.
       </p>
 
@@ -78,10 +78,7 @@ export default function Privacy() {
       <p>Bytebox is a tool for developers. It is not directed at children and does not knowingly collect their data.</p>
 
       <h2>Changes to this policy</h2>
-      <p>
-        When this policy changes, the date at the top changes with it. The full history of the page is public in the{" "}
-        <a href={REPO_URL}>GitHub repository</a>.
-      </p>
+      <p>When this policy changes, the date at the top changes with it.</p>
 
       <h2>Questions</h2>
       <p>

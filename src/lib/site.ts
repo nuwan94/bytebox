@@ -11,7 +11,6 @@ export const SITE_DESCRIPTION =
 
 export const GA_MEASUREMENT_ID = "G-31Q12L3CTG";
 export const SPONSOR_URL = "https://github.com/sponsors/nuwan94";
-export const REPO_URL = "https://github.com/nuwan94/bytebox";
 export const CONTACT_EMAIL = "hello@nuwan.dev";
 
 /** Absolute URL for a path such as "/tools/base64/". */

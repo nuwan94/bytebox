@@ -22,4 +22,12 @@ export const toolComponents: Record<string, ComponentType> = {
   "line-sorter": dynamic(() => import("./line-sorter/Tool")),
   "text-counter": dynamic(() => import("./text-counter/Tool")),
   "lorem-ipsum": dynamic(() => import("./lorem-ipsum/Tool")),
+  "json-yaml": dynamic(() => import("./json-yaml/Tool")),
+  "json-to-ts": dynamic(() => import("./json-to-ts/Tool")),
+  "qr-code": dynamic(() => import("./qr-code/Tool")),
+  cron: dynamic(() => import("./cron/Tool")),
+  "sql-formatter": dynamic(() => import("./sql-formatter/Tool")),
+  markdown: dynamic(() => import("./markdown/Tool")),
+  "html-entities": dynamic(() => import("./html-entities/Tool")),
+  "url-parser": dynamic(() => import("./url-parser/Tool")),
 };

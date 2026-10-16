@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { InfoPage } from "@/components/InfoPage";
-import { pageUrl, REPO_URL, SPONSOR_URL } from "@/lib/site";
+import { pageUrl, SPONSOR_URL } from "@/lib/site";
 import { tools } from "@/tools/registry";
 
 export const metadata: Metadata = {
@@ -36,10 +36,10 @@ export default function About() {
         Bytebox is made by Nuwan Alawatta, whose other work is at <a href="https://nuwan.dev">nuwan.dev</a>.
       </p>
 
-      <h2>Open source</h2>
+      <h2>Feedback</h2>
       <p>
-        The code is public on <a href={REPO_URL}>GitHub</a>. You can read exactly what each tool does with your
-        input, report a problem or suggest a tool there.
+        If a tool gives a wrong result, or there is one you wish existed, the{" "}
+        <Link href="/contact/">contact page</Link> says how to get in touch.
       </p>
 
       <h2>How it is paid for</h2>
